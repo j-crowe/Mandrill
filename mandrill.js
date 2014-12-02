@@ -1,10 +1,34 @@
-var verify = (function(){
-    // Accepted verify types and their associated emails.
-    // Change the value of each type to modify the error message.
-    var types = {   "email": "Please enter valid email",
-                    "required": "This field is required",
-                    "min": "Too short. Minimum length of ",
-                    "max": "Too Long. Maximum length of ",
+var  mandrill= (function(){
+    // Currently accepted verification types and their associated regex + error
+    var types = {   "email": {
+                                "error": "Please enter valid email",
+                                "regex":/^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/
+                            },
+                    "required": {
+                                "error":"This field is required",
+                                "regex":/\S/
+                            },
+                    "min": {
+                                "error": "Too short. Minimum length of ",
+                                "regex":/^min\:\s*(\d*)/i
+                            },
+                    "max": {
+                                "error": "Too Long. Maximum length of ",
+                                "regex":/^max\:\s*(\d*)/i
+                            },
+                    "number": {
+                                "error": "Not a number value",
+                                "regex":/^\d+$/
+                            },
+                    "url": {
+                                "error": "Invalid URL",
+                                "regex":/^https?:\/\/[\-A-Za-z0-9+&@#\/%?=~_|!:,.;]*[\-A-Za-z0-9+&@#\/%=~_|]/
+                            },
+                    "alphanumeric": {
+                                "error": "Only use numbers and letters",
+                                "regex":/^[0-9A-Za-z]+$/
+                            }
+
     };
     var variable_types = ["min", "max"];
     var exist = "ERROR: Verification type does not exist: "
@@ -40,7 +64,7 @@ var verify = (function(){
                 var type = attributes[i].trim();
                 // TODO: replace with a variable loop
 
-                if(verify.verify_variable_attribute(type) == undefined && types[type] == undefined){
+                if(mandrill.verify_variable_attribute(type) == undefined && types[type] == undefined){
                     console.log(exist + type);
                     return false
                 }
@@ -55,49 +79,37 @@ var verify = (function(){
          *          and data prep is done outside this function however
          ****************************************************************************************/
         check_types: function(verify_input, type){
-            var temp_type = verify.verify_variable_attribute(type);
+            var temp_type = mandrill.verify_variable_attribute(type);
             var variable_type = undefined;
             if (temp_type != undefined){
                 veriable_type = type;
                 type = temp_type;
             }
             switch(type){
-                case "email":
-                    var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-                    var status = regex.test(verify_input);
-                    if (status === false){status = types[type]}
-                    return status;
-                case "required":
-                    var status = true;
-                    if(verify_input.length <= 0){
-                        status = types[type];
-                    }
-                    return status;
                 case "max":
                     var status = true;
-                    var regex = /^max\:\s*(\d*)/i;
-                    var max = parseInt(regex.exec(veriable_type)[1]);
+                    var max = parseInt(types[type]["regex"].exec(veriable_type)[1]);
                     var length = verify_input.length;
                     if(isNaN(max)== true){
                         console.log("Invalid max value, NaN: " + temp_type)
                     }else if(length > max){
-                        status = types[type] + max;
+                        status = types[type]["error"] + max;
                     }
                     return status;
                 case "min":
                     var status = true;
-                    var regex = /^min\:\s*(\d*)/i;
-                    var min = parseInt(regex.exec(veriable_type)[1]);
+                    var min = parseInt(types[type]["regex"].exec(veriable_type)[1]);
                     var length = verify_input.length;
                     if(isNaN(min)== true){
                         console.log("Invalid max value, NaN: " + temp_type)
                     }else if(length < min){
-                        status = types[type] + min;
+                        status = types[type]["error"] + min;
                     }
                     return status;
                 default:
-                    console.log("Error: verification type not supported.");
-                    return false;
+                    var status = types[type]["regex"].test(verify_input);
+                    if(status === false){status = types[type]["error"];}
+                    return status;
             }
         },
         /*****************************************************************************************
@@ -112,16 +124,28 @@ var verify = (function(){
             var attributes = verification_type.split(',');
 
             // Check base cases and return false if invalid
-            if(verify.verify_attributes(attributes) === false){
+            if(mandrill.verify_attributes(attributes) === false){
                 return false;
             }
             // For every attribute in data-verify do associated verification
             for(i = 0; i < attributes.length; ++i){
                 type = attributes[i].trim();
-                var verify_status = verify.check_types(verify_input, type)
+                var verify_status = mandrill.check_types(verify_input, type)
                 if(verify_status != true){
                     return verify_status;
                 }
+            }
+            return true;
+        },
+        /*****************************************************************************************
+         * FLOW     Called by the verify or single_verify to handle and display errors
+         * INPUT    The element and status to display in case of error
+         * RETURNS  true if verified or false if error displayed
+         ****************************************************************************************/
+        error_check: function(element, status){
+            if(status != true){
+                $(element).notify(status);
+                return false;
             }
             return true;
         },
@@ -132,25 +156,27 @@ var verify = (function(){
          * NOTE     This function is the root of most work, it calls children to error check then
          *          verify the content of the fields
          ****************************************************************************************/
-        verify_set: function(parent){
+        verify: function(parent, callback){
             var verified = true;
             var verification_status = "";
             var last_element = undefined;
 
             // look at each child of the parent element passed in
-            $('[data-verify]').each(function() {
+            parent.find('[data-verify]').each(function() {
                 last_element = this;
                 // Call verification on each element
-                verification_status = verify.verify_field(this);
+                verification_status = mandrill.verify_field(this);
                 // If an error is returned, set verified to false and halt each function
-                if(verification_status != true){
+                if(verification_status != mandrill.error_check(this, verification_status)){
                     verified = false;
-                    return false;
                 }
             });
             // Successful verification process results in callback called
-            if(verification_status === true){
-                // TODO: do callback
+            if(verified === true){
+                // Check callback and apply arbitrary amount of arguments
+                if(typeof callback === 'function'){
+                    callback.apply(arguments);
+                }
                 return true;
             // Failed verification process results in first error being displayed
             }else{
@@ -161,26 +187,13 @@ var verify = (function(){
         },
         /*****************************************************************************************
          * TAG      ENTRY POINT
-         * FLOW     Entry point into verify.js on a set of elements
-         * INPUT    Parent of a set of elements to be verified. Type does not matter. SEE ABOVE IN TYPES
-         * RETURNS  returns either "true" or "false" depending on verification and handles notifyjs
-         ****************************************************************************************/
-        verify: function(parent){
-            return verify.verify_set(parent);
-        },
-        /*****************************************************************************************
-         * TAG      ENTRY POINT
-         * FLOW     Entry point into verify.js on a single element
+         * FLOW     Entry point into mandrill.js on a single element
          * INPUT    Element to be verified. SEE ABOVE IN TYPES
          * RETURNS  returns either "true" or "false" depending on verification and handles notifyjs
          ****************************************************************************************/
         single_verify: function(element){
-            var status = verify.verify_field(element);
-            if(status != true){
-                $(element).notify(status);
-                return false;
-            }
-            return true;
+            var status = mandrill.verify_field(element);
+            return mandrill.error_check(element, status);
         }
     }
 })();

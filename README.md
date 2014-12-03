@@ -53,6 +53,28 @@ Takes optional callback and optional arguments
 ```javascript
 mandrill.verify($([parent_object]), [optional callback, [optional args...]])
 ```
+
+##Supported Types
+* required
+    * data-verify="required"
+* email
+    * data-verify="email"
+* number
+    * data-verify="number"
+* url
+    * data-verify="url"
+* alphanumeric
+    * data-verify="alphanumeric"
+* max
+    * data-verify="max(10)" <--- this verifies input is max 10 characters
+* min
+    * data-verify="min(32)" <--- this verifies input is min 32 characters
+
+- Multiple types per field:
+    - data-verify="required, email, max(32)"
+
+
+
 ## License
 
 Released under the MIT License. See `LICENSE` file for details.

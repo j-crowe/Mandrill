@@ -1,0 +1,31 @@
+<html>
+
+<head>
+    <script type="text/javascript" src="jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="notify.min.js"></script>
+    <script type="text/javascript" src="mandrill.js"></script>
+    <script>
+        function callback_test() {
+            alert("Test Callback");
+        }
+    </script>
+</head>
+
+<body>
+    <h1>Mandrill Example</h1>
+
+    <div id="login_form" >
+
+        <input id="login_user" type="email" name="email" data-verify="required, email" placeholder="Email" />
+        <br />
+
+        <input id="login_pass" type="password" name="password1" data-verify="required" placeholder="Password" />
+        <br />
+
+        <a href="#" id="login_button" class="submit-button clear float_left" onclick="mandrill.verify($('#login_form'), callback_test)">Login</a>
+    </div>
+
+
+</body>
+
+</html>

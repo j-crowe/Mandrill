@@ -1,7 +1,5 @@
 # Mandrill Verify
 
-[![Build Status](https://travis-ci.org/j-crowe/Mandrill.svg?branch=master)](https://travis-ci.org/j-crowe/Mandrill)
-
 Flexible jQuery form validation, no forms or form submission required
 
 ## Version

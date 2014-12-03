@@ -35,9 +35,9 @@ First make sure you have all libraries included in your header.
 On the fields you want verified, use the data-verify class followed by supported verification types(See `Supported Types`). The wrapping div allows mandrill to verify all children with data-verify class.
 ```javascript
   <div id="login_form" >
-    <input id="login_user" type="email" name="email" data-verify="required, email" placeholder="Email" />
+    <input id="login_user" type="email" data-verify="required, email" placeholder="Email" />
     <br />
-    <input id="login_pass" type="password" name="password1" data-verify="required" placeholder="Password" />
+    <input id="login_pass" type="password" data-verify="required" placeholder="Password" />
     <br />
   </div>
 ```

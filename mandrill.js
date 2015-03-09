@@ -82,13 +82,13 @@ var  mandrill= (function(){
             var temp_type = mandrill.verify_variable_attribute(type);
             var variable_type = undefined;
             if (temp_type != undefined){
-                veriable_type = type;
+                variable_type = type;
                 type = temp_type;
             }
             switch(type){
                 case "max":
                     var status = true;
-                    var max = parseInt(types[type]["regex"].exec(veriable_type)[1]);
+                    var max = parseInt(types[type]["regex"].exec(variable_type)[1]);
                     var length = verify_input.length;
                     if(isNaN(max)== true){
                         console.log("Invalid max value, NaN: " + temp_type)
@@ -98,7 +98,7 @@ var  mandrill= (function(){
                     return status;
                 case "min":
                     var status = true;
-                    var min = parseInt(types[type]["regex"].exec(veriable_type)[1]);
+                    var min = parseInt(types[type]["regex"].exec(variable_type)[1]);
                     var length = verify_input.length;
                     if(isNaN(min)== true){
                         console.log("Invalid max value, NaN: " + temp_type)

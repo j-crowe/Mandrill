@@ -66,12 +66,12 @@ mandrill.verify($([parent_object]), [optional callback, [optional args...]])
 * alphanumeric
     * data-verify="alphanumeric"
 * max
-    * data-verify="max(10)" <--- this verifies input is max 10 characters
+    * data-verify="max:10" <--- this verifies input is max 10 characters
 * min
-    * data-verify="min(32)" <--- this verifies input is min 32 characters
+    * data-verify="min:32" <--- this verifies input is min 32 characters
 
 - Multiple types per field:
-    - data-verify="required, email, max(32)"
+    - data-verify="required, email, max:32"
 
 
 

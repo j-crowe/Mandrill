@@ -51,10 +51,10 @@
 
     <div id="login_form" >
 
-        <input id="login_user" type="email" name="email" data-verify="required, email" placeholder="Email" />
+        <input id="login_user" type="email" name="email" data-verify="required, email" placeholder="Required: Email" />
         <br>
 
-        <input id="login_pass" type="password" name="password1" data-verify="required" placeholder="Password" />
+        <input id="login_pass" type="password" name="password1" data-verify="required" placeholder="Required: Password" />
         <br>
 
         <a id="login_button" class="submit-button clear float_left" onclick="mandrill.verify($('#login_form'), login_callback)">Login</a>
@@ -75,17 +75,17 @@
     <div id="trim_optional_form">
         <input id="optional_number" type="text" name="optional_numbers" data-verify="number" placeholder="optional: number(integers and floats)" />
         <br>
-        <input id="optional_trim" type="email" name="email" data-verify="trim,email" placeholder="email (whitespace trimmed)" />
+        <input id="optional_trim" type="email" name="email" data-verify="trim,email" placeholder="Optional: email (whitespace trimmed)" />
         <br>
     <a id="trim_button" class="submit-button clear float_left" onclick="mandrill.verify($('#trim_optional_form'), trimmed_callback)">Test Trimmed</a>
     </div>
     <br><br>
     <div id="max_min_form">
-        <input id="max" type="password" name="max" data-verify="max:5" placeholder="Password (max length 5 characters)" />
+        <input id="max" type="password" name="max" data-verify="required,max:5" placeholder="Password (max length 5 characters)" />
         <br>
-        <input id="min" type="password" name="min" data-verify="min:3" placeholder="Password (min length 3 characters)" />
+        <input id="min" type="password" name="min" data-verify="required,min:3" placeholder="Password (min length 3 characters)" />
         <br>
-        <input id="min_max" type="password" name="min_max" data-verify="min:3,max:5" placeholder="Password (min length 3 chars and max length 5 chars)" />
+        <input id="min_max" type="password" name="min_max" data-verify="required,min:3,max:5" placeholder="Password (min length 3 chars and max length 5 chars)" />
         <br>
     <a id="min_max_button" class="submit-button clear float_left" onclick="mandrill.verify($('#min_max_form'), min_max_callback)">Test Trimmed</a>
     </div>

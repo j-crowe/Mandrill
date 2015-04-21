@@ -194,9 +194,13 @@ var  mandrill= (function(){
                     verified = false;
                 }
             });
+            // Check the number of verify fields to see if user may have made a mistake in verifying
             if(verify_field_count === 0){
                 console.log(mandrill_warning + "No verify fields found. Empty or incorrect parent container")
             }
+
+            //--------------------check verification_status---------------------//
+
             // Successful verification process results in callback called
             if(verified === true){
                 // Check callback and apply arbitrary amount of arguments

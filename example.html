@@ -1,12 +1,47 @@
 <html>
 
 <head>
+    <style>
+        input{
+            display: inline-block;
+            width: 312px;
+            margin-bottom: 15px;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+            outline: 0;
+            background-color: #fff;
+        }
+        a{
+            font-weight: bold;
+            display: inline-block;
+            padding: 10px;
+            cursor: pointer;
+            text-decoration: none;
+            color: white;
+            border-radius: 3px;
+            background: #ff7641;
+
+        }
+    </style>
+
     <script type="text/javascript" src="jquery-2.1.1.min.js"></script>
     <script type="text/javascript" src="notify.min.js"></script>
     <script type="text/javascript" src="mandrill.js"></script>
     <script>
-        function callback_test() {
-            alert("Test Callback");
+        function login_callback() {
+            alert("Login Callback Success");
+        }
+
+        function numbers_callback() {
+            alert("Numbers Callback Success");
+        }
+
+        function trimmed_callback() {
+            alert("Trimmed Callback Success");
+        }
+        function min_max_callback(){
+            alert("Min Max Callback");
         }
     </script>
 </head>
@@ -16,16 +51,44 @@
 
     <div id="login_form" >
 
-        <input id="login_user" type="email" name="email" data-verify="required, email" placeholder="Email" />
-        <br />
+        <input id="login_user" type="email" name="email" data-verify="required, email" placeholder="Required: Email" />
+        <br>
 
-        <input id="login_pass" type="password" name="password1" data-verify="required" placeholder="Password" />
-        <br />
+        <input id="login_pass" type="password" name="password1" data-verify="required" placeholder="Required: Password" />
+        <br>
 
-        <a href="#" id="login_button" class="submit-button clear float_left" onclick="mandrill.verify($('#login_form'), callback_test)">Login</a>
+        <a id="login_button" class="submit-button clear float_left" onclick="mandrill.verify($('#login_form'), login_callback)">Login</a>
     </div>
-
-
+    <br>
+    <br>
+    <div id="numbers_form">
+        <input id="numbers" type="text" name="numbers" data-verify="number" placeholder="optional: number(integers and floats) (ex. 12.5 or 9)" />
+        <br>
+        <input id="integer" type="text" name="numbers" data-verify="integer" placeholder="optional: integer (signed 0-9) (ex. -12 or 12)" />
+        <br>
+        <input id="digits" type="text" name="digits" data-verify="digits" placeholder="optional: digit (unsigned 0-9) (ex. 100 or 5)" />
+        <br>
+    <a id="numbers_button" class="submit-button clear float_left" onclick="mandrill.verify($('#numbers_form'), numbers_callback)">Test Numbers</a>
+    </div>
+    <br>
+    <br>
+    <div id="trim_optional_form">
+        <input id="optional_number" type="text" name="optional_numbers" data-verify="number" placeholder="optional: number(integers and floats)" />
+        <br>
+        <input id="optional_trim" type="email" name="email" data-verify="trim,email" placeholder="Optional: email (whitespace trimmed)" />
+        <br>
+    <a id="trim_button" class="submit-button clear float_left" onclick="mandrill.verify($('#trim_optional_form'), trimmed_callback)">Test Trimmed</a>
+    </div>
+    <br><br>
+    <div id="max_min_form">
+        <input id="max" type="password" name="max" data-verify="required,max:5" placeholder="Required: Password (max length 5 characters)" />
+        <br>
+        <input id="min" type="password" name="min" data-verify="required,min:3" placeholder="Required: Password (min length 3 characters)" />
+        <br>
+        <input id="min_max" type="password" name="min_max" data-verify="required,min:3,max:5" placeholder="Required: Password (min 3 chars and max 5 chars)" />
+        <br>
+    <a id="min_max_button" class="submit-button clear float_left" onclick="mandrill.verify($('#max_min_form'), min_max_callback)">Test Trimmed</a>
+    </div>
 </body>
 
 </html>

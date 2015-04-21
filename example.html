@@ -81,13 +81,13 @@
     </div>
     <br><br>
     <div id="max_min_form">
-        <input id="max" type="password" name="max" data-verify="required,max:5" placeholder="Password (max length 5 characters)" />
+        <input id="max" type="password" name="max" data-verify="required,max:5" placeholder="Required: Password (max length 5 characters)" />
         <br>
-        <input id="min" type="password" name="min" data-verify="required,min:3" placeholder="Password (min length 3 characters)" />
+        <input id="min" type="password" name="min" data-verify="required,min:3" placeholder="Required: Password (min length 3 characters)" />
         <br>
-        <input id="min_max" type="password" name="min_max" data-verify="required,min:3,max:5" placeholder="Password (min length 3 chars and max length 5 chars)" />
+        <input id="min_max" type="password" name="min_max" data-verify="required,min:3,max:5" placeholder="Required: Password (min 3 chars and max 5 chars)" />
         <br>
-    <a id="min_max_button" class="submit-button clear float_left" onclick="mandrill.verify($('#min_max_form'), min_max_callback)">Test Trimmed</a>
+    <a id="min_max_button" class="submit-button clear float_left" onclick="mandrill.verify($('#max_min_form'), min_max_callback)">Test Trimmed</a>
     </div>
 </body>
 

@@ -54,11 +54,11 @@
     </div>
     <br>
     <div id="numbers_form">
-        <input id="numbers" type="text" name="numbers" data-verify="number" placeholder="number(integers and floats)" />
+        <input id="numbers" type="text" name="numbers" data-verify="number" placeholder="number(integers and floats) (ex. 12.5 or 9)" />
         <br>
-        <input id="integer" type="text" name="numbers" data-verify="integer" placeholder="integer" />
+        <input id="integer" type="text" name="numbers" data-verify="integer" placeholder="integer (signed 0-9) (ex. -12 or 12)" />
         <br>
-        <input id="digits" type="text" name="digits" data-verify="digits" placeholder="digits" />
+        <input id="digits" type="text" name="digits" data-verify="digits" placeholder="digit (unsigned 0-9) (ex. 100 or 5)" />
         <br>
     <a href="#" id="login_button" class="submit-button clear float_left" onclick="mandrill.verify($('#numbers_form'), numbers_callback)">Test Numbers</a>
     </div>

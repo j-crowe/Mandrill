@@ -70,13 +70,12 @@ var  mandrill= (function(){
             var required = false;
             for(i = 0; i < attributes.length; ++i){
                 var type = attributes[i].trim();
-                // TODO: replace with a variable loop
                 var attribute = types[type];
                 if(mandrill.verify_variable_attribute(type) == undefined && attribute == undefined){
                     console.log(exist + type);
                     return {"success": false, "required": required};
                 }
-
+                // If the attribute is required, set required flag to true
                 if(attribute === "required"){required = true;}
 
             }
@@ -135,8 +134,12 @@ var  mandrill= (function(){
             var attributes = verification_type.split(',');
 
             // Check base cases and return false if invalid
-            if(mandrill.verify_attributes(attributes) === false){
+            var attr_status = mandrill.verify_attributes(attributes);
+            if(attr_status.success === false){
                 return false;
+            // If the field is not marked as required and there is no input, return success
+            }else if(attr_status.required === false && verify_input.length === 0){
+                return true;
             }
             // For every attribute in data-verify do associated verification
             for(i = 0; i < attributes.length; ++i){

@@ -70,7 +70,6 @@ var  mandrill= (function(){
 
             for(i = 0; i < attributes.length; ++i){
                 var type = attributes[i].trim();
-                // TODO: replace with a variable loop
 
                 if(mandrill.verify_variable_attribute(type) == undefined && types[type] == undefined){
                     console.log(exist + type);

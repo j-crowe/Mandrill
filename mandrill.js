@@ -18,15 +18,15 @@ var  mandrill= (function(){
                             },
                     "number": {
                                 "error": "Not a number value",
-                                "regex":/^-?(?:\\d+|\\d{1,3}(?:,\\d{3})+)?(?:\\.\\d+)?$/
+                                "regex":/^-?(?:\d+|\d{1,3}(?:,\d{3})+)?(?:\.\d+)?$/
                             },
                     "integer": {
                                 "error": "not an integer value",
-                                "regex":/^-?\\d+$/
+                                "regex":/^-?\d+$/
                             },
                     "digits": {
                                 "error": "not a digit value",
-                                "regex":/^\\d+$/
+                                "regex":/^\d+$/
                             },
                     "url": {
                                 "error": "Invalid URL",
@@ -76,6 +76,7 @@ var  mandrill= (function(){
                     console.log(exist + type);
                     return false
                 }
+
             }
             return true;
         },

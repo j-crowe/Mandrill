@@ -5,8 +5,12 @@
     <script type="text/javascript" src="notify.min.js"></script>
     <script type="text/javascript" src="mandrill.js"></script>
     <script>
-        function callback_test() {
-            alert("Test Callback");
+        function login_callback() {
+            alert("Login Callback Success");
+        }
+
+        function numbers_callback() {
+            alert("Numbers Callback Success");
         }
     </script>
 </head>
@@ -17,14 +21,23 @@
     <div id="login_form" >
 
         <input id="login_user" type="email" name="email" data-verify="required, email" placeholder="Email" />
-        <br />
+        <br>
 
         <input id="login_pass" type="password" name="password1" data-verify="required" placeholder="Password" />
-        <br />
+        <br>
 
-        <a href="#" id="login_button" class="submit-button clear float_left" onclick="mandrill.verify($('#login_form'), callback_test)">Login</a>
+        <a href="#" id="login_button" class="submit-button clear float_left" onclick="mandrill.verify($('#login_form'), login_callback)">Login</a>
     </div>
-
+    <br>
+    <div id="numbers_form">
+        <input id="numbers" type="text" name="numbers" data-verify="number" placeholder="number(integers and floats)" />
+        <br>
+        <input id="integer" type="text" name="numbers" data-verify="integer" placeholder="integer" />
+        <br>
+        <input id="digits" type="text" name="digits" data-verify="digits" placeholder="digits" />
+        <br>
+    <a href="#" id="login_button" class="submit-button clear float_left" onclick="mandrill.verify($('#numbers_form'), numbers_callback)">Test Numbers</a>
+    </div>
 
 </body>
 

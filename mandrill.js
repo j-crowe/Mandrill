@@ -67,17 +67,20 @@ var  mandrill= (function(){
                 console.log("Error: No attributes assigned to 'data-verify'");
                 return false;
             }
-
+            var required = false;
             for(i = 0; i < attributes.length; ++i){
                 var type = attributes[i].trim();
-
-                if(mandrill.verify_variable_attribute(type) == undefined && types[type] == undefined){
+                // TODO: replace with a variable loop
+                var attribute = types[type];
+                if(mandrill.verify_variable_attribute(type) == undefined && attribute == undefined){
                     console.log(exist + type);
-                    return false
+                    return {"success": false, "required": required};
                 }
 
+                if(attribute === "required"){required = true;}
+
             }
-            return true;
+            return {"success": true, "required": required};
         },
         /*****************************************************************************************
          * FLOW     Called by verify_fields to check the regex of accepted verification types

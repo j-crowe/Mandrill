@@ -163,9 +163,9 @@ var  mandrill= (function(){
             return true;
         },
         /*****************************************************************************************
-         * FLOW     Called by the entry point function verify_set or single_verify
-         * INPUT    The element to be verified
-         * RETURNS  true or error status
+         * FLOW     ENTRY POINT
+         * INPUT    The parent continer with items to be varified
+         * RETURNS  true or false and error status
          * NOTE     This function is the root of most work, it calls children to error check then
          *          verify the content of the fields
          ****************************************************************************************/

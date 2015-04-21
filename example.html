@@ -36,6 +36,13 @@
         function numbers_callback() {
             alert("Numbers Callback Success");
         }
+
+        function trimmed_callback() {
+            alert("Trimmed Callback Success");
+        }
+        function min_max_callback(){
+            alert("Min Max Callback");
+        }
     </script>
 </head>
 
@@ -53,16 +60,34 @@
         <a href="#" id="login_button" class="submit-button clear float_left" onclick="mandrill.verify($('#login_form'), login_callback)">Login</a>
     </div>
     <br>
+    <br>
     <div id="numbers_form">
-        <input id="numbers" type="text" name="numbers" data-verify="number" placeholder="number(integers and floats) (ex. 12.5 or 9)" />
+        <input id="numbers" type="text" name="numbers" data-verify="number" placeholder="optional: number(integers and floats) (ex. 12.5 or 9)" />
         <br>
-        <input id="integer" type="text" name="numbers" data-verify="integer" placeholder="integer (signed 0-9) (ex. -12 or 12)" />
+        <input id="integer" type="text" name="numbers" data-verify="integer" placeholder="optional: integer (signed 0-9) (ex. -12 or 12)" />
         <br>
-        <input id="digits" type="text" name="digits" data-verify="digits" placeholder="digit (unsigned 0-9) (ex. 100 or 5)" />
+        <input id="digits" type="text" name="digits" data-verify="digits" placeholder="optional: digit (unsigned 0-9) (ex. 100 or 5)" />
         <br>
-    <a href="#" id="login_button" class="submit-button clear float_left" onclick="mandrill.verify($('#numbers_form'), numbers_callback)">Test Numbers</a>
+    <a href="#" id="numbers_button" class="submit-button clear float_left" onclick="mandrill.verify($('#numbers_form'), numbers_callback)">Test Numbers</a>
     </div>
-
+    <br>
+    <br>
+    <div id="trim_optional_form">
+        <input id="optional_number" type="text" name="optional_numbers" data-verify="number" placeholder="optional: number(integers and floats)" />
+        <br>
+        <input id="optional_trim" type="email" name="email" data-verify="trim,email" placeholder="email (whitespace trimmed)" />
+        <br>
+    <a href="#" id="trim_button" class="submit-button clear float_left" onclick="mandrill.verify($('#trim_optional_form'), trimmed_callback)">Test Trimmed</a>
+    </div>
+    <div id="max_min_form">
+        <input id="max" type="password" name="max" data-verify="max:5" placeholder="Password (max length 5 characters)" />
+        <br>
+        <input id="min" type="password" name="min" data-verify="min:3" placeholder="Password (min length 3 characters)" />
+        <br>
+        <input id="min_max" type="password" name="min_max" data-verify="min:3,max:5" placeholder="Password (min length 3 chars and max length 5 chars)" />
+        <br>
+    <a href="#" id="min_max_button" class="submit-button clear float_left" onclick="mandrill.verify($('#min_max_form'), min_max_callback)">Test Trimmed</a>
+    </div>
 </body>
 
 </html>

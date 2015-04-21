@@ -41,45 +41,7 @@ var  mandrill= (function(){
     var variable_types = ["min", "max"];
     var exist = "ERROR: Verification type does not exist: "
     return {
-            /*****************************************************************************************
-             * FLOW     Called by verify_attribute and check_types. Used to return type of variability param
-             * INPUT    Attribute to be checked for variability param.
-             * RETURNS  returns the type of veriability param or "undefined"
-             * @example Given "max: 25", this function will return "max" as the type
-             ****************************************************************************************/
-            verify_variable_attribute: function(attribute){
-                var type = undefined;
-                if(attribute.match(/min/i)){
-                    type = "min";
-                }else if(attribute.match(/max/i)){
-                    type = "max";
-                }
-                return type;
-            },
-            /*****************************************************************************************
-             * FLOW     Called by verify_field for basic error checking. Length and existance of attribute
-             * INPUT    Attributes to be verified. Checks for existance and non-empty SEE ABOVE IN TYPES
-             * RETURNS  returns either "true" or "false" depending on verification
-             ****************************************************************************************/
-            verify_attributes: function(attributes){
-            // Check if attributes exist when calling
-            if(attributes.length === 0){
-                console.log("Error: No attributes assigned to 'data-verify'");
-                return false;
-            }
-            var required = false;
-            for(i = 0; i < attributes.length; ++i){
-                var type = attributes[i].trim();
-                if(mandrill.verify_variable_attribute(type) == undefined && types[type] == undefined){
-                    console.log(exist + type);
-                    return {"success": false, "required": required};
-                }
-                // If the attribute is required, set required flag to true
-                if(type === "required"){required = true;}
 
-            }
-            return {"success": true, "required": required};
-        },
         /*****************************************************************************************
          * FLOW     Called by verify_fields to check the regex of accepted verification types
          * INPUT    Input to be verified, and the type of verification object. SEE ABOVE IN TYPES
@@ -180,6 +142,9 @@ var  mandrill= (function(){
             // If the field is not marked as required and there is no input, return success
             }else if(attr_status.required === false && verify_input.length === 0){
                 return true;
+            // If trim flag is set, trim the field input so allow verification to ignore whitespace
+            }else if(attr_status.trim === true){
+                verify_input.trim();
             }
             // For every attribute in data-verify do associated verification
             for(i = 0; i < attributes.length; ++i){
@@ -191,6 +156,7 @@ var  mandrill= (function(){
             }
             return true;
         },
+        set_flags: function(verify_status)
         /*****************************************************************************************
          * FLOW     Called by the verify or single_verify to handle and display errors
          * INPUT    The element and status to display in case of error

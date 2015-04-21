@@ -1,16 +1,16 @@
 # Mandrill Verify
 
-Flexible jQuery form validation, no forms or form submission required
+Flexible jQuery form validation, no forms or form submission required.
 
 ## Version
 
-0.1
+0.2
 
 ## Requirements
 
 jQuery >= 1.8
 
-notify.js
+notify.js (will remove this requirement for built in and/or customizable error handling)
 
 ## Install
 
@@ -55,24 +55,20 @@ mandrill.verify($([parent_object]), [optional callback, [optional args...]])
 ```
 
 ##Supported Types
-* required
-    * data-verify="required"
-* email
-    * data-verify="email"
-* number
-    * data-verify="number"
-* url
-    * data-verify="url"
-* alphanumeric
-    * data-verify="alphanumeric"
-* max
-    * data-verify="max:10" <--- this verifies input is max 10 characters
-* min
-    * data-verify="min:32" <--- this verifies input is min 32 characters
 
-- Multiple types per field:
-    - data-verify="required, email, max:32"
-
+| Type          | Description                                         | Assignment                          |
+|---------------|-----------------------------------------------------|-------------------------------------|
+| required      | Must enter a value. If not added assumed optional.  |data-verify="required"               |
+| email         | Standard email address.                             |data-verify="email"                  |
+| number        | Integer or floating point value.                    |data-verify="number"                 |
+| integer       | Signed integer value.                               |data-verify="integer"                |
+| digits        | Unsigned integer value.                             |data-verify="digits"                 |
+| trim          | Ignore trailing or leading whitespace.              |data-verify="trim"                   |
+| url           | Standard urls. No IP or Ports supported.            |data-verify="url"                    |
+| alphanumeric  | Alphanumeric values only (ex. "abc123").            |data-verify="alphanumeric"           |
+| max           | Maximum characters allowed in input.                |data-verify="max:10"                 |
+| min           | Minimum characters allowed in input.                |data-verify="min:32"                 |
+| multiple types| You can put many different types on a field         |data-verify="required, email, max:32"|
 
 
 ## License

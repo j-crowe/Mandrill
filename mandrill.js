@@ -39,7 +39,9 @@ var  mandrill= (function(){
 
     };
     var variable_types = ["min", "max"];
-    var exist = "ERROR: Verification type does not exist: "
+    var mandrill_error= "Manrdrill: Error - ", mandrill_warning= "Mandrill: Warning - ", mandrill_status = "Mandrill: ";
+    var exist = mandrill_error + "Verification type does not exist: ";
+
     return {
 
         /*****************************************************************************************
@@ -62,7 +64,7 @@ var  mandrill= (function(){
                     var max = parseInt(types[type]["regex"].exec(variable_type)[1]);
                     var length = verify_input.length;
                     if(isNaN(max)== true){
-                        console.log("Invalid max value, NaN: " + temp_type)
+                        console.log(mandrill_error+"Invalid max value, NaN: " + temp_type)
                     }else if(length > max){
                         status = types[type]["error"] + max;
                     }
@@ -72,7 +74,7 @@ var  mandrill= (function(){
                     var min = parseInt(types[type]["regex"].exec(variable_type)[1]);
                     var length = verify_input.length;
                     if(isNaN(min)== true){
-                        console.log("Invalid max value, NaN: " + temp_type)
+                        console.log(mandrill_error+"Invalid max value, NaN: " + temp_type)
                     }else if(length < min){
                         status = types[type]["error"] + min;
                     }
@@ -107,7 +109,7 @@ var  mandrill= (function(){
             verify_attributes: function(attributes){
             // Check if attributes exist when calling
             if(attributes.length === 0){
-                console.log("Error: No attributes assigned to 'data-verify'");
+                console.log(mandrill_error+"No attributes assigned to 'data-verify'");
                 return false;
             }
             var required=false, trim=false;
@@ -156,7 +158,6 @@ var  mandrill= (function(){
             }
             return true;
         },
-        set_flags: function(verify_status)
         /*****************************************************************************************
          * FLOW     Called by the verify or single_verify to handle and display errors
          * INPUT    The element and status to display in case of error
@@ -180,9 +181,11 @@ var  mandrill= (function(){
             var verified = true;
             var verification_status = "";
             var last_element = undefined;
+            var verify_field_count = 0;
 
             // look at each child of the parent element passed in
             parent.find('[data-verify]').each(function() {
+                verify_field_count++;
                 last_element = this;
                 // Call verification on each element
                 verification_status = mandrill.verify_field(this);
@@ -191,6 +194,9 @@ var  mandrill= (function(){
                     verified = false;
                 }
             });
+            if(verify_field_count === 0){
+                console.log(mandrill_warning + "No verify fields found. Empty or incorrect parent container")
+            }
             // Successful verification process results in callback called
             if(verified === true){
                 // Check callback and apply arbitrary amount of arguments
@@ -201,7 +207,7 @@ var  mandrill= (function(){
             // Failed verification process results in first error being displayed
             }else{
                 // TODO: do notify of error
-                console.log(verification_status);
+                console.log(mandrill_status + verification_status);
                 return false;
             }
         },

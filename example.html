@@ -57,7 +57,7 @@
         <input id="login_pass" type="password" name="password1" data-verify="required" placeholder="Password" />
         <br>
 
-        <a href="#" id="login_button" class="submit-button clear float_left" onclick="mandrill.verify($('#login_form'), login_callback)">Login</a>
+        <a id="login_button" class="submit-button clear float_left" onclick="mandrill.verify($('#login_form'), login_callback)">Login</a>
     </div>
     <br>
     <br>
@@ -68,7 +68,7 @@
         <br>
         <input id="digits" type="text" name="digits" data-verify="digits" placeholder="optional: digit (unsigned 0-9) (ex. 100 or 5)" />
         <br>
-    <a href="#" id="numbers_button" class="submit-button clear float_left" onclick="mandrill.verify($('#numbers_form'), numbers_callback)">Test Numbers</a>
+    <a id="numbers_button" class="submit-button clear float_left" onclick="mandrill.verify($('#numbers_form'), numbers_callback)">Test Numbers</a>
     </div>
     <br>
     <br>
@@ -77,8 +77,9 @@
         <br>
         <input id="optional_trim" type="email" name="email" data-verify="trim,email" placeholder="email (whitespace trimmed)" />
         <br>
-    <a href="#" id="trim_button" class="submit-button clear float_left" onclick="mandrill.verify($('#trim_optional_form'), trimmed_callback)">Test Trimmed</a>
+    <a id="trim_button" class="submit-button clear float_left" onclick="mandrill.verify($('#trim_optional_form'), trimmed_callback)">Test Trimmed</a>
     </div>
+    <br><br>
     <div id="max_min_form">
         <input id="max" type="password" name="max" data-verify="max:5" placeholder="Password (max length 5 characters)" />
         <br>
@@ -86,7 +87,7 @@
         <br>
         <input id="min_max" type="password" name="min_max" data-verify="min:3,max:5" placeholder="Password (min length 3 chars and max length 5 chars)" />
         <br>
-    <a href="#" id="min_max_button" class="submit-button clear float_left" onclick="mandrill.verify($('#min_max_form'), min_max_callback)">Test Trimmed</a>
+    <a id="min_max_button" class="submit-button clear float_left" onclick="mandrill.verify($('#min_max_form'), min_max_callback)">Test Trimmed</a>
     </div>
 </body>
 

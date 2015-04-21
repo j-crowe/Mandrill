@@ -70,13 +70,12 @@ var  mandrill= (function(){
             var required = false;
             for(i = 0; i < attributes.length; ++i){
                 var type = attributes[i].trim();
-                var attribute = types[type];
-                if(mandrill.verify_variable_attribute(type) == undefined && attribute == undefined){
+                if(mandrill.verify_variable_attribute(type) == undefined && types[type] == undefined){
                     console.log(exist + type);
                     return {"success": false, "required": required};
                 }
                 // If the attribute is required, set required flag to true
-                if(attribute === "required"){required = true;}
+                if(type === "required"){required = true;}
 
             }
             return {"success": true, "required": required};

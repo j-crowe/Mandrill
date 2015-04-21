@@ -121,6 +121,47 @@ var  mandrill= (function(){
                     return status;
             }
         },
+
+        /*****************************************************************************************
+             * FLOW     Called by verify_attribute and check_types. Used to return type of variability param
+             * INPUT    Attribute to be checked for variability param.
+             * RETURNS  returns the type of veriability param or "undefined"
+             * @example Given "max: 25", this function will return "max" as the type
+             ****************************************************************************************/
+            verify_variable_attribute: function(attribute){
+                var type = undefined;
+                if(attribute.match(/min/i)){
+                    type = "min";
+                }else if(attribute.match(/max/i)){
+                    type = "max";
+                }
+                return type;
+            },
+            /*****************************************************************************************
+             * FLOW     Called by verify_field for basic error checking. Length and existance of attribute
+             * INPUT    Attributes to be verified. Checks for existance and non-empty SEE ABOVE IN TYPES
+             * RETURNS  returns verify_status object with a boolean status, required field flag, and trim flag
+             ****************************************************************************************/
+            verify_attributes: function(attributes){
+            // Check if attributes exist when calling
+            if(attributes.length === 0){
+                console.log("Error: No attributes assigned to 'data-verify'");
+                return false;
+            }
+            var required=false, trim=false;
+            for(i = 0; i < attributes.length; ++i){
+                var type = attributes[i].trim();
+                if(mandrill.verify_variable_attribute(type) == undefined && types[type] == undefined){
+                    console.log(exist + type);
+                    return {"success": false, "required": required, "trim": trim};
+                }
+                // Check if verify attribute is required or trim and set flags
+                if(type === "required"){required = true;}
+                else if( type === "trim"){trim = true;}
+
+            }
+            return {"success": true, "required": required, "trim": trim};
+        },
         /*****************************************************************************************
          * FLOW     Called by verify_field for basic error checking. Length and existance of attribute
          * INPUT    Attributes to be verified. Checks for existance and non-empty SEE ABOVE IN TYPES
